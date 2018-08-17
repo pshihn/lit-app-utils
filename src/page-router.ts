@@ -2,10 +2,14 @@ import { LitElement } from '@polymer/lit-element';
 import { TemplateResult, html } from 'lit-html';
 import { bus } from './message-bus';
 import { Route } from './router';
-import { PageElement } from './page-element';
 
 export interface ActivePageListener {
   onPageChange(page: PageElement): Promise<void>;
+}
+
+export abstract class PageElement extends HTMLElement {
+  onActivate() { }
+  onDeactivate() { }
 }
 
 export class PageRouter extends LitElement {
