@@ -7,9 +7,9 @@ export interface ActivePageListener {
   onPageChange(page: PageElement): Promise<void>;
 }
 
-export abstract class PageElement extends HTMLElement {
-  onActivate() { }
-  onDeactivate() { }
+export interface PageElement extends HTMLElement {
+  onActivate(): void;
+  onDeactivate(): void;
 }
 
 export class PageRouter extends LitElement {

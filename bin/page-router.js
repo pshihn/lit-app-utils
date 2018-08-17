@@ -1,10 +1,6 @@
 import { LitElement } from '@polymer/lit-element';
 import { html } from 'lit-html';
 import { bus } from './message-bus';
-export class PageElement extends HTMLElement {
-    onActivate() { }
-    onDeactivate() { }
-}
 export class PageRouter extends LitElement {
     constructor() {
         super(...arguments);

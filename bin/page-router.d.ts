@@ -4,7 +4,7 @@ import { Route } from './router';
 export interface ActivePageListener {
     onPageChange(page: PageElement): Promise<void>;
 }
-export declare abstract class PageElement extends HTMLElement {
+export interface PageElement extends HTMLElement {
     onActivate(): void;
     onDeactivate(): void;
 }
