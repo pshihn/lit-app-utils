@@ -19,16 +19,24 @@ export function urlize(path, map, baseUrl = '') {
     }
     return url;
 }
-export async function get(url) {
-    const response = await fetch(url, { credentials: 'include' });
+export async function get(url, includeCredentials = false) {
+    const init = {};
+    if (includeCredentials) {
+        init.credentials = 'include';
+    }
+    const response = await fetch(url, init);
     if (!response.ok) {
         const message = await response.text();
         throw { status: response.status, message, response };
     }
     return (await response.json());
 }
-export async function post(url, data) {
-    const request = new Request(url, { method: 'POST', credentials: 'include', body: JSON.stringify(data) });
+export async function post(url, data, includeCredentials = false) {
+    const init = { method: 'POST', body: JSON.stringify(data) };
+    if (includeCredentials) {
+        init.credentials = 'include';
+    }
+    const request = new Request(url, init);
     const response = await fetch(request);
     if (!response.ok) {
         const message = await response.text();
@@ -36,8 +44,12 @@ export async function post(url, data) {
     }
     return (await response.json());
 }
-export async function del(url) {
-    const request = new Request(url, { method: 'DELETE', credentials: 'include' });
+export async function del(url, includeCredentials = false) {
+    const init = { method: 'DELETE' };
+    if (includeCredentials) {
+        init.credentials = 'include';
+    }
+    const request = new Request(url, init);
     const response = await fetch(request);
     if (!response.ok) {
         const message = await response.text();

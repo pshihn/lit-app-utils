@@ -19,8 +19,12 @@ export function urlize(path: string, map: { [key: string]: string }, baseUrl: st
   return url;
 }
 
-export async function get<T>(url: string): Promise<T> {
-  const response = await fetch(url, { credentials: 'include' });
+export async function get<T>(url: string, includeCredentials: boolean = false): Promise<T> {
+  const init: RequestInit = {};
+  if (includeCredentials) {
+    init.credentials = 'include';
+  }
+  const response = await fetch(url, init);
   if (!response.ok) {
     const message = await response.text();
     throw { status: response.status, message, response };
@@ -28,8 +32,12 @@ export async function get<T>(url: string): Promise<T> {
   return (await response.json()) as T;
 }
 
-export async function post<T>(url: string, data: any): Promise<T> {
-  const request = new Request(url, { method: 'POST', credentials: 'include', body: JSON.stringify(data) });
+export async function post<T>(url: string, data: any, includeCredentials: boolean = false): Promise<T> {
+  const init: RequestInit = { method: 'POST', body: JSON.stringify(data) };
+  if (includeCredentials) {
+    init.credentials = 'include';
+  }
+  const request = new Request(url, init);
   const response = await fetch(request);
   if (!response.ok) {
     const message = await response.text();
@@ -38,8 +46,12 @@ export async function post<T>(url: string, data: any): Promise<T> {
   return (await response.json()) as T;
 }
 
-export async function del(url: string): Promise<Response> {
-  const request = new Request(url, { method: 'DELETE', credentials: 'include' });
+export async function del(url: string, includeCredentials: boolean = false): Promise<Response> {
+  const init: RequestInit = { method: 'DELETE' };
+  if (includeCredentials) {
+    init.credentials = 'include';
+  }
+  const request = new Request(url, init);
   const response = await fetch(request);
   if (!response.ok) {
     const message = await response.text();

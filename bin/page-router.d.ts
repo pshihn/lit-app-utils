@@ -19,6 +19,6 @@ export declare class PageRouter extends LitElement {
     readonly pageSlot: HTMLSlotElement;
     private readonly slotElements;
     getPages(): Promise<HTMLElement[]>;
-    private findPage;
+    private findPage(pages, name);
     onRoute(route: Route): Promise<void>;
 }
