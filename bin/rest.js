@@ -36,6 +36,9 @@ export async function post(url, data, includeCredentials = false) {
     if (includeCredentials) {
         init.credentials = 'include';
     }
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    init.headers = headers;
     const request = new Request(url, init);
     const response = await fetch(request);
     if (!response.ok) {
