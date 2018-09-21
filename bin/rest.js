@@ -20,10 +20,7 @@ export function urlize(path, map, baseUrl = '') {
     return url;
 }
 export async function get(url, includeCredentials = false) {
-    const init = {};
-    if (includeCredentials) {
-        init.credentials = 'include';
-    }
+    const init = { credentials: includeCredentials ? 'include' : 'same-origin' };
     const response = await fetch(url, init);
     if (!response.ok) {
         const message = await response.text();
@@ -32,10 +29,7 @@ export async function get(url, includeCredentials = false) {
     return (await response.json());
 }
 export async function post(url, data, includeCredentials = false) {
-    const init = { method: 'POST', body: JSON.stringify(data) };
-    if (includeCredentials) {
-        init.credentials = 'include';
-    }
+    const init = { method: 'POST', credentials: includeCredentials ? 'include' : 'same-origin', body: JSON.stringify(data) };
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     init.headers = headers;
@@ -48,10 +42,7 @@ export async function post(url, data, includeCredentials = false) {
     return (await response.json());
 }
 export async function del(url, includeCredentials = false) {
-    const init = { method: 'DELETE' };
-    if (includeCredentials) {
-        init.credentials = 'include';
-    }
+    const init = { method: 'DELETE', credentials: includeCredentials ? 'include' : 'same-origin' };
     const request = new Request(url, init);
     const response = await fetch(request);
     if (!response.ok) {

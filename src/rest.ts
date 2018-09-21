@@ -20,10 +20,7 @@ export function urlize(path: string, map: { [key: string]: string }, baseUrl: st
 }
 
 export async function get<T>(url: string, includeCredentials: boolean = false): Promise<T> {
-  const init: RequestInit = {};
-  if (includeCredentials) {
-    init.credentials = 'include';
-  }
+  const init: RequestInit = { credentials: includeCredentials ? 'include' : 'same-origin' };
   const response = await fetch(url, init);
   if (!response.ok) {
     const message = await response.text();
@@ -33,10 +30,7 @@ export async function get<T>(url: string, includeCredentials: boolean = false): 
 }
 
 export async function post<T>(url: string, data: any, includeCredentials: boolean = false): Promise<T> {
-  const init: RequestInit = { method: 'POST', body: JSON.stringify(data) };
-  if (includeCredentials) {
-    init.credentials = 'include';
-  }
+  const init: RequestInit = { method: 'POST', credentials: includeCredentials ? 'include' : 'same-origin', body: JSON.stringify(data) };
   const headers = new Headers();
   headers.append('Content-Type', 'application/json');
   init.headers = headers;
@@ -50,10 +44,7 @@ export async function post<T>(url: string, data: any, includeCredentials: boolea
 }
 
 export async function del(url: string, includeCredentials: boolean = false): Promise<Response> {
-  const init: RequestInit = { method: 'DELETE' };
-  if (includeCredentials) {
-    init.credentials = 'include';
-  }
+  const init: RequestInit = { method: 'DELETE', credentials: includeCredentials ? 'include' : 'same-origin' };
   const request = new Request(url, init);
   const response = await fetch(request);
   if (!response.ok) {
