@@ -1,7 +1,7 @@
 export declare type Params = { [name: string]: string };
 
 export function createUrl(path: string, baseUrl: string = '', params?: Params): string {
-  const url = new URL(`/p/${path}`, baseUrl);
+  const url = new URL(path, baseUrl);
   if (params) {
     let q = '?';
     let first = true;
