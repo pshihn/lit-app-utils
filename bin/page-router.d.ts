@@ -1,15 +1,11 @@
 import { LitElement } from '@polymer/lit-element';
 import { TemplateResult } from 'lit-html';
 import { Route } from './router';
-export interface ActivePageListener {
-    onPageChange(page: PageElement): Promise<void>;
-}
 export interface PageElement extends HTMLElement {
     onActivate(): void;
     onDeactivate(): void;
 }
 export declare class PageRouter extends LitElement {
-    pageListener?: ActivePageListener;
     private currentPage;
     private pendingSlotResolve?;
     private _slot?;
@@ -19,6 +15,6 @@ export declare class PageRouter extends LitElement {
     readonly pageSlot: HTMLSlotElement;
     private readonly slotElements;
     getPages(): Promise<HTMLElement[]>;
-    private findPage(pages, name);
+    private findPage;
     onRoute(route: Route): Promise<void>;
 }

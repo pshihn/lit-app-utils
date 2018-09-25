@@ -3,17 +3,12 @@ import { TemplateResult, html } from 'lit-html';
 import { bus } from './message-bus';
 import { Route } from './router';
 
-export interface ActivePageListener {
-  onPageChange(page: PageElement): Promise<void>;
-}
-
 export interface PageElement extends HTMLElement {
   onActivate(): void;
   onDeactivate(): void;
 }
 
 export class PageRouter extends LitElement {
-  pageListener?: ActivePageListener;
   private currentPage: PageElement | null = null;
   private pendingSlotResolve?: (value?: HTMLElement[] | PromiseLike<HTMLElement[]> | undefined) => void;
   private _slot?: HTMLSlotElement;
@@ -122,9 +117,6 @@ export class PageRouter extends LitElement {
       }
     }
     this.currentPage = newPage as PageElement;
-    if (this.pageListener) {
-      await this.pageListener.onPageChange(this.currentPage);
-    }
     if (this.currentPage.onActivate) {
       try {
         this.currentPage.onActivate();

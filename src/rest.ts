@@ -1,22 +1,17 @@
-export function urlize(path: string, map: { [key: string]: string }, baseUrl: string = '') {
-  let url = baseUrl || ''
-  if (url && (url.lastIndexOf('/') === (url.length - 1))) {
-    url = url.substring(0, url.length - 1);
-  }
-  url += path;
-  let firstParam = true;
-  for (const key in map) {
-    if (key && map[key]) {
-      if (firstParam) {
-        firstParam = false;
-        url += '?';
-      } else {
-        url += '&';
-      }
-      url += `${key}=${encodeURIComponent(map[key])}`;
+export declare type Params = { [name: string]: string };
+
+export function createUrl(path: string, params: Params, baseUrl: string = ''): string {
+  const url = new URL(`/p/${path}`, baseUrl);
+  if (params) {
+    let q = '?';
+    let first = true;
+    for (const name in params) {
+      q = `${q}${first ? '' : '&'}${name}=${encodeURIComponent(params[name])}`;
+      first = false;
     }
+    url.search = q;
   }
-  return url;
+  return url.toString();
 }
 
 export async function get<T>(url: string, includeCredentials: boolean = false): Promise<T> {

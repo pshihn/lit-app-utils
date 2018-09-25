@@ -18,9 +18,9 @@ export declare class Router {
     updateContext(context: any): void;
     replace(url: string, context?: any): void;
     connect(): void;
-    private _which(e);
-    private _isSameOrigin(href);
-    private onLinkClick(e);
-    private detachHandlers();
-    private onChanged();
+    private _which;
+    private _isSameOrigin;
+    private onLinkClick;
+    private detachHandlers;
+    private onChanged;
 }

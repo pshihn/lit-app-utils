@@ -1,23 +1,15 @@
-export function urlize(path, map, baseUrl = '') {
-    let url = baseUrl || '';
-    if (url && (url.lastIndexOf('/') === (url.length - 1))) {
-        url = url.substring(0, url.length - 1);
-    }
-    url += path;
-    let firstParam = true;
-    for (const key in map) {
-        if (key && map[key]) {
-            if (firstParam) {
-                firstParam = false;
-                url += '?';
-            }
-            else {
-                url += '&';
-            }
-            url += `${key}=${encodeURIComponent(map[key])}`;
+export function createUrl(path, params, baseUrl = '') {
+    const url = new URL(`/p/${path}`, baseUrl);
+    if (params) {
+        let q = '?';
+        let first = true;
+        for (const name in params) {
+            q = `${q}${first ? '' : '&'}${name}=${encodeURIComponent(params[name])}`;
+            first = false;
         }
+        url.search = q;
     }
-    return url;
+    return url.toString();
 }
 export async function get(url, includeCredentials = false) {
     const init = { credentials: includeCredentials ? 'include' : 'same-origin' };

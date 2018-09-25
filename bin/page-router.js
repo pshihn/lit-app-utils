@@ -107,9 +107,6 @@ export class PageRouter extends LitElement {
             }
         }
         this.currentPage = newPage;
-        if (this.pageListener) {
-            await this.pageListener.onPageChange(this.currentPage);
-        }
         if (this.currentPage.onActivate) {
             try {
                 this.currentPage.onActivate();
