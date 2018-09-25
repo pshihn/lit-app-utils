@@ -1,4 +1,4 @@
-export function createUrl(path, params, baseUrl = '') {
+export function createUrl(path, baseUrl = '', params) {
     const url = new URL(`/p/${path}`, baseUrl);
     if (params) {
         let q = '?';

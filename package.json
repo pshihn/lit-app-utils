@@ -1,6 +1,6 @@
 {
   "name": "lit-app-utils",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "App utils",
   "main": "bin/index.js",
   "module": "bin/index.js",
